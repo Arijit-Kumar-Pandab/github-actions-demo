@@ -1,0 +1,25 @@
+name: Kubescape
+
+# Introduction to GitHub Actions CI/CD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  nsa-security-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code repository
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Step 2: Install Kubescape
+      - name: Install Kubescape
+        run: curl -s https://raw.githubusercontent.com/armosec/kubescape/master/install.sh | /bin/bash
+
+      # Step 3: Scan YAML files with NSA framework
+      - name: Scan YAML files
+        run: kubescape scan framework nsa *.yaml
